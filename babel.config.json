@@ -1,14 +1,13 @@
 {
-  "plugins": [
-    [
-      "@babel/plugin-transform-typescript",
-      {
-        "isTSX": true,
-        "allExtensions": true
-      }
-    ],
-    [
-      "@babel/plugin-transform-modules-commonjs"
+    "ignore": ["**/*.test.js", "**/*.test.ts"],
+    "plugins": [
+        [
+            "@babel/plugin-transform-typescript",
+            {
+                "isTSX": true,
+                "allExtensions": true
+            }
+        ],
+        ["@babel/plugin-transform-modules-commonjs"]
     ]
-  ]
 }

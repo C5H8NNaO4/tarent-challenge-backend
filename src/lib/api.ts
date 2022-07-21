@@ -85,16 +85,16 @@ export const cancelTimeSlotForTraining = (req, res) => {
     }
 
     const booking = bookings.find(
-        (item) => item.trainingId === Number(id) && item.timeSlot === timeSlot
+        (item) =>
+            item.trainingId === Number(id) &&
+            item.timeSlot === timeSlot &&
+            item.userId === req.user.id
     );
+
     const index = bookings.indexOf(booking);
 
     if (index === -1) {
         return failure(res, RemoveNonExistingItemError);
-    }
-
-    if (booking.userId !== req.user.id) {
-        return failure(res, Unauthorized, 500);
     }
 
     bookings.splice(index, 1);
