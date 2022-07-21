@@ -1,4 +1,5 @@
-import { failure, Unauthorized } from '../errors';
+import { Unauthorized } from '../errors';
+import { failure } from '../util';
 
 export const hasPermission = (permission) => (req, res, next) => {
     const { user } = req;
