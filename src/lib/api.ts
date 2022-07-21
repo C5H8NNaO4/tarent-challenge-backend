@@ -4,10 +4,12 @@ import {
     BookedOut,
     failure,
     InvalidId,
+    MalformedInput,
     RemoveBookedItemError,
     RemoveNonExistingItemError,
     success,
 } from '../errors';
+import { verifyTimeSlotParam } from './util';
 
 export const logout = (req, res) => {
     req.logOut((err) => {
@@ -46,6 +48,10 @@ export const getBookingsByTrainingId = (req, res) => {
 export const bookTimeSlotForTraining = (req, res) => {
     const { id } = req.params;
     const { timeSlot } = req.body;
+
+    if (!verifyTimeSlotParam(timeSlot)) {
+        return failure(res, MalformedInput('timeSlot'), 500);
+    }
 
     if (!trainingData[id]) {
         return failure(res, InvalidId(id), 500);
@@ -96,6 +102,10 @@ export const cancelTimeSlotForTraining = (req, res) => {
 export const addTimeSlotToTraining = (req, res) => {
     const { id } = req.params;
     const { timeSlot } = req.body;
+
+    if (!verifyTimeSlotParam(timeSlot)) {
+        return failure(res, MalformedInput('timeSlot'), 500);
+    }
 
     if (!trainingData[id]) {
         return failure(res, InvalidId(id), 500);

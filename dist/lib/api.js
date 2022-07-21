@@ -9,6 +9,8 @@ var _data = require("../data");
 
 var _errors = require("../errors");
 
+var _util = require("./util");
+
 const logout = (req, res) => {
   req.logOut(err => {
     if (err) {
@@ -63,6 +65,10 @@ const bookTimeSlotForTraining = (req, res) => {
     timeSlot
   } = req.body;
 
+  if (!(0, _util.verifyTimeSlotParam)(timeSlot)) {
+    return (0, _errors.failure)(res, (0, _errors.MalformedInput)('timeSlot'), 500);
+  }
+
   if (!_data.trainingData[id]) {
     return (0, _errors.failure)(res, (0, _errors.InvalidId)(id), 500);
   }
@@ -116,6 +122,10 @@ const addTimeSlotToTraining = (req, res) => {
   const {
     timeSlot
   } = req.body;
+
+  if (!(0, _util.verifyTimeSlotParam)(timeSlot)) {
+    return (0, _errors.failure)(res, (0, _errors.MalformedInput)('timeSlot'), 500);
+  }
 
   if (!_data.trainingData[id]) {
     return (0, _errors.failure)(res, (0, _errors.InvalidId)(id), 500);

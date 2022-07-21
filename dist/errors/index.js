@@ -3,7 +3,7 @@
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.success = exports.failure = exports.Unauthorized = exports.RemoveNonExistingItemError = exports.RemoveBookedItemError = exports.InvalidRouteError = exports.InvalidId = exports.BookedOut = exports.AddDuplicateItemError = void 0;
+exports.success = exports.failure = exports.Unauthorized = exports.RemoveNonExistingItemError = exports.RemoveBookedItemError = exports.MalformedInput = exports.InvalidRouteError = exports.InvalidId = exports.BookedOut = exports.AddDuplicateItemError = void 0;
 
 var _config = require("../config");
 
@@ -41,6 +41,10 @@ const RemoveBookedItemError = new Error('Cannot remove timeslot that have been b
 exports.RemoveBookedItemError = RemoveBookedItemError;
 const RemoveNonExistingItemError = new Error('Cannot remove nonexisting timeslot.');
 exports.RemoveNonExistingItemError = RemoveNonExistingItemError;
+
+const MalformedInput = field => new Error(`Malformed input in field '${field}'.`);
+
+exports.MalformedInput = MalformedInput;
 
 const InvalidId = id => new Error(`Invalid id '${id}' passed to route`);
 

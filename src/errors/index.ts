@@ -32,6 +32,8 @@ export const RemoveBookedItemError = new Error(
 export const RemoveNonExistingItemError = new Error(
     'Cannot remove nonexisting timeslot.'
 );
+export const MalformedInput = (field) =>
+    new Error(`Malformed input in field '${field}'.`);
 
 export const InvalidId = (id) =>
     new Error(`Invalid id '${id}' passed to route`);

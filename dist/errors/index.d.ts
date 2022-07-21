@@ -6,4 +6,5 @@ export declare const BookedOut: Error;
 export declare const AddDuplicateItemError: Error;
 export declare const RemoveBookedItemError: Error;
 export declare const RemoveNonExistingItemError: Error;
+export declare const MalformedInput: (field: any) => Error;
 export declare const InvalidId: (id: any) => Error;
