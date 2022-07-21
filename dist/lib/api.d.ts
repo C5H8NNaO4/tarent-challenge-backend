@@ -1,0 +1,10 @@
+export declare const logout: (req: any, res: any) => void;
+export declare const sendSessionUser: (req: any, res: any) => any;
+export declare const sendTrainingData: (req: any, res: any) => any;
+export declare const sendBookingData: (req: any, res: any) => any;
+export declare const getBookingsByTrainingId: (req: any, res: any) => any;
+export declare const bookTimeSlotForTraining: (req: any, res: any) => any;
+export declare const cancelTimeSlotForTraining: (req: any, res: any) => any;
+export declare const addTimeSlotToTraining: (req: any, res: any) => any;
+export declare const deleteTimeSlotFromTraining: (req: any, res: any) => any;
+export declare const modifyTimeSlotOfTraining: (req: any, res: any) => any;
