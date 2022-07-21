@@ -2,14 +2,13 @@ import { addBooking, bookings, trainingData } from '../data';
 import {
     AddDuplicateItemError,
     BookedOut,
-    failure,
     InvalidId,
     MalformedInput,
     RemoveBookedItemError,
     RemoveNonExistingItemError,
-    success,
+    Unauthorized,
 } from '../errors';
-import { verifyTimeSlotParam } from './util';
+import { verifyTimeSlotParam, failure, success } from './util';
 
 export const logout = (req, res) => {
     req.logOut((err) => {
@@ -85,16 +84,20 @@ export const cancelTimeSlotForTraining = (req, res) => {
         return failure(res, InvalidId(id), 500);
     }
 
-    const index = bookings.findIndex(
-        (booking) =>
-            booking.trainingId === Number(id) && booking.timeSlot === timeSlot
+    const booking = bookings.find(
+        (item) => item.trainingId === Number(id) && item.timeSlot === timeSlot
     );
+    const index = bookings.indexOf(booking);
 
     if (index === -1) {
         return failure(res, RemoveNonExistingItemError);
     }
 
-    const booking = bookings.splice(index, 1);
+    if (booking.userId !== req.user.id) {
+        return failure(res, Unauthorized, 500);
+    }
+
+    bookings.splice(index, 1);
 
     return success(res, booking);
 };
@@ -143,6 +146,7 @@ export const deleteTimeSlotFromTraining = (req, res) => {
     if (filtered.length > 0) {
         return failure(res, RemoveBookedItemError);
     }
+
     const index = training.availableTimeSlots.indexOf(timeSlot);
 
     training.availableTimeSlots.splice(index, 1);
@@ -159,6 +163,10 @@ export const modifyTimeSlotOfTraining = (req, res) => {
     }
 
     const training = trainingData[id];
+    const isBooked = bookings.some(
+        (booking) =>
+            booking.trainingId === Number(id) && booking.timeSlot === timeSlot
+    );
 
     if (!training.availableTimeSlots.includes(timeSlot)) {
         return failure(res, RemoveNonExistingItemError);
@@ -166,6 +174,10 @@ export const modifyTimeSlotOfTraining = (req, res) => {
 
     if (training.availableTimeSlots.includes(newTimeSlot)) {
         return failure(res, AddDuplicateItemError);
+    }
+
+    if (isBooked) {
+        return failure(res, RemoveBookedItemError);
     }
 
     const index = training.availableTimeSlots.indexOf(timeSlot);

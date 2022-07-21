@@ -28,6 +28,8 @@ export const trainingData = [
     },
 ];
 
-export const bookings = [{ trainingId: 0, userId: -1, timeSlot: '10:00' }];
+export const bookings = [
+    { trainingId: 0, userId: -1, timeSlot: '25.07 10:00' },
+];
 
 export const addBooking = (booking) => bookings.push(booking);
