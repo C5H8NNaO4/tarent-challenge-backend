@@ -44,6 +44,7 @@ export const upsertTraining = (req, res) => {
             id: trainingData.length,
             availableTimeSlots: [],
             ...rest,
+            slots: 10,
         };
         trainingData.push(upsertedTraining);
     } else {
