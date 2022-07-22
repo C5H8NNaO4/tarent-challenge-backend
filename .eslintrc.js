@@ -9,6 +9,7 @@ module.exports = {
     env: {
         browser: true,
         es2021: true,
+        'jest/globals': true,
     },
     extends: ['airbnb', 'prettier', 'plugin:prettier/recommended'],
     parser: '@typescript-eslint/parser',
@@ -16,7 +17,7 @@ module.exports = {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint', 'prettier'],
+    plugins: ['@typescript-eslint', 'prettier', 'jest'],
     rules: {
         'linebreak-style': 'off',
         'import/extensions': [

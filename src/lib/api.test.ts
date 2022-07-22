@@ -4,13 +4,17 @@ import {
     bookTimeSlotForTraining,
     cancelTimeSlotForTraining,
     deleteTimeSlotFromTraining,
+    deleteTraining,
     getBookingsByTrainingId,
     modifyTimeSlotOfTraining,
     sendTrainingData,
+    upsertTraining,
 } from './api';
 
 const send = jest.fn((x) => x);
 const status = jest.fn(() => ({ send }));
+
+let lastAddedTraining;
 
 describe('API Test Suite', () => {
     it('lists all trainings', () => {
@@ -19,6 +23,89 @@ describe('API Test Suite', () => {
             send,
         });
         expect(send.mock.lastCall[0]).toBe(trainingData);
+    });
+
+    it('adds a training', () => {
+        upsertTraining(
+            {
+                params: {},
+                body: {
+                    name: 'Jenkins Course',
+                    trainer: 'Douglas Crockford',
+                    duration: 45,
+                    cost: 500,
+                    createNew: true,
+                },
+            },
+            {
+                status,
+                send,
+            }
+        );
+
+        // eslint-disable-next-line prefer-destructuring
+        lastAddedTraining = send.mock.lastCall[0];
+
+        expect(lastAddedTraining).toStrictEqual({
+            availableTimeSlots: [],
+            cost: 500,
+            duration: 45,
+            id: 3,
+            name: 'Jenkins Course',
+            trainer: 'Douglas Crockford',
+        });
+        expect(trainingData.length).toBe(4);
+    });
+
+    it('modifies a training', () => {
+        upsertTraining(
+            {
+                params: {
+                    id: lastAddedTraining.id,
+                },
+                body: {
+                    name: 'Jenkins Course',
+                    trainer: 'Douglas Crockford',
+                    duration: 45,
+                    cost: 450,
+                },
+            },
+            {
+                status,
+                send,
+            }
+        );
+        expect(send.mock.lastCall[0]).toStrictEqual({
+            availableTimeSlots: [],
+            cost: 450,
+            duration: 45,
+            id: 3,
+            name: 'Jenkins Course',
+            trainer: 'Douglas Crockford',
+        });
+    });
+
+    it('deletes a training', () => {
+        deleteTraining(
+            {
+                params: {
+                    id: lastAddedTraining.id,
+                },
+            },
+            {
+                status,
+                send,
+            }
+        );
+        expect(send.mock.lastCall[0]).toStrictEqual({
+            availableTimeSlots: [],
+            cost: 450,
+            duration: 45,
+            id: 3,
+            name: 'Jenkins Course',
+            trainer: 'Douglas Crockford',
+        });
+        expect(trainingData.length).toBe(3);
     });
 
     it('lists bookings for a training', () => {
@@ -230,7 +317,7 @@ describe('API Test Suite', () => {
         });
     });
 
-    it('does not allows updating a timeslot to an existing one', () => {
+    it('does not allow updating a timeslot to an existing one', () => {
         modifyTimeSlotOfTraining(
             {
                 user: {

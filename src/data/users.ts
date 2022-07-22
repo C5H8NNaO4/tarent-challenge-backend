@@ -15,6 +15,8 @@ export const users = [
         name: 'admin',
         permissions: [
             Permissions.ADD_TRAINING,
+            Permissions.UPD_TRAINING,
+            Permissions.DEL_TRAINING,
             Permissions.READ_TRAININGS,
             Permissions.BOOK_TRAINING,
             Permissions.ADD_SLOT,

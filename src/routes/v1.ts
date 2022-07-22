@@ -10,9 +10,11 @@ import {
     getBookingsByTrainingId,
     logout,
     modifyTimeSlotOfTraining,
+    upsertTraining,
     sendBookingData,
     sendSessionUser,
     sendTrainingData,
+    deleteTraining,
 } from '../lib/api';
 import { hasPermission } from '../lib/middleware';
 
@@ -25,6 +27,23 @@ router.get('/login', passport.authenticate('session'), sendSessionUser);
 router.post('/login', passport.authenticate('local'), sendSessionUser);
 router.post('/logout', logout);
 
+router.post(
+    '/training',
+    hasPermission(Permissions.ADD_TRAINING),
+    upsertTraining
+);
+
+router.put(
+    '/training/:id',
+    hasPermission(Permissions.UPD_TRAINING),
+    upsertTraining
+);
+router.delete(
+    '/training/:id',
+    hasPermission(Permissions.DEL_TRAINING),
+    deleteTraining
+);
+
 router.get('/training/:id/bookings', getBookingsByTrainingId);
 
 router.post(
@@ -33,6 +52,7 @@ router.post(
     hasPermission(Permissions.BOOK_TRAINING),
     bookTimeSlotForTraining
 );
+
 router.delete(
     '/training/:id/booking/:timeSlot',
     passport.authenticate('session'),

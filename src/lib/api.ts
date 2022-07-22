@@ -30,6 +30,41 @@ export const sendSessionUser = (req, res) => success(res, req.user);
 export const sendTrainingData = (req, res) => success(res, trainingData);
 export const sendBookingData = (req, res) => success(res, bookings);
 
+export const upsertTraining = (req, res) => {
+    const { id } = req.params;
+    const { createNew, ...rest } = req.body;
+
+    if (!trainingData[id] && !createNew) {
+        return failure(res, InvalidId(id), 500);
+    }
+
+    let upsertedTraining;
+    if (createNew) {
+        upsertedTraining = {
+            id: trainingData.length,
+            availableTimeSlots: [],
+            ...rest,
+        };
+        trainingData.push(upsertedTraining);
+    } else {
+        upsertedTraining = Object.assign(trainingData[id], rest);
+    }
+
+    return success(res, upsertedTraining);
+};
+
+export const deleteTraining = (req, res) => {
+    const { id } = req.params;
+
+    if (!trainingData[id]) {
+        return failure(res, InvalidId(id), 500);
+    }
+
+    const removedTraining = trainingData.splice(id, 1)[0];
+
+    return success(res, removedTraining);
+};
+
 export const getBookingsByTrainingId = (req, res) => {
     const { id } = req.params;
 

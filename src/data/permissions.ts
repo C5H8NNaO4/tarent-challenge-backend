@@ -1,7 +1,8 @@
 export enum Permissions {
     READ_TRAININGS,
     ADD_TRAINING,
-    MOD_TIME,
+    UPD_TRAINING,
+    DEL_TRAINING,
     BOOK_TRAINING,
     ADD_SLOT,
     DEL_SLOT,

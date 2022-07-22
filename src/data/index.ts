@@ -7,6 +7,10 @@ export const trainingData = [
         duration: 45,
         slots: 10,
         availableTimeSlots: ['25.07 10:00', '25.07 14:00', '25.07 15:00'],
+        description: `
+Get your JavaScript skills to the next level with this introductionary course for beginners.
+You'll learn about the basics of JavaScript as well as advanced coding pragmas, data-structures, do's and don'ts.
+        `,
     },
     {
         id: 1,
@@ -16,6 +20,10 @@ export const trainingData = [
         duration: 45,
         slots: 1,
         availableTimeSlots: ['25.07 12:00', '25.07 14:00', '25.07 15:00'],
+        description: `
+Ever felt like creating blazing fast and stunning websites on your own?
+This is the right course for you. It covers everything you need to get started developing modern SPAs at home.
+        `,
     },
     {
         id: 2,
@@ -25,6 +33,10 @@ export const trainingData = [
         duration: 45,
         slots: 5,
         availableTimeSlots: ['25.07 12:00', '25.07 14:00', '25.07 15:00'],
+        description: `
+Are you aware of the benefits of type-safety? If not, you should definitely check out this course.
+It covers all the necesseties to start developing robust code.
+        `,
     },
 ];
 
