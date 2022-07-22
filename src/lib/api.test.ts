@@ -1,4 +1,3 @@
-import { trainingData, bookings } from '../data/index';
 import {
     addTimeSlotToTraining,
     bookTimeSlotForTraining,
@@ -10,6 +9,8 @@ import {
     sendTrainingData,
     upsertTraining,
 } from './api';
+
+import { bookings, trainingData } from '../data/index';
 
 const send = jest.fn((x) => x);
 const status = jest.fn(() => ({ send }));
@@ -257,7 +258,6 @@ describe('API Test Suite', () => {
     });
 
     it("doesn't allow removing a timeslot that has been booked", () => {
-        const training = trainingData[0];
         deleteTimeSlotFromTraining(
             {
                 user: {

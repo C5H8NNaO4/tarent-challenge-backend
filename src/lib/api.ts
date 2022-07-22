@@ -1,3 +1,5 @@
+import { failure, success, verifyTimeSlotParam } from './util';
+
 import { addBooking, bookings, trainingData } from '../data';
 import {
     AddDuplicateItemError,
@@ -6,9 +8,7 @@ import {
     MalformedInput,
     RemoveBookedItemError,
     RemoveNonExistingItemError,
-    Unauthorized,
 } from '../errors';
-import { verifyTimeSlotParam, failure, success } from './util';
 
 export const logout = (req, res) => {
     req.logOut((err) => {
@@ -26,7 +26,7 @@ export const logout = (req, res) => {
     });
 };
 
-export const sendSessionUser = (req, res) => success(res, req.user);
+export const getAuthenticatedUser = (req, res) => success(res, req.user);
 export const sendTrainingData = (req, res) => success(res, trainingData);
 export const sendBookingData = (req, res) => success(res, bookings);
 

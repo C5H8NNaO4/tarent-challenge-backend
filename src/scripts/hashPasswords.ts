@@ -1,4 +1,5 @@
 import bcrypt from 'bcrypt';
+
 import { SALT_ROUNDS } from '../config';
 
 const saltRounds = Number(SALT_ROUNDS);

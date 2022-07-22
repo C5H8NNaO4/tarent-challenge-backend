@@ -1,5 +1,7 @@
 import crypto from 'crypto';
-import { parse, format } from 'date-fns';
+
+import { format, parse } from 'date-fns';
+
 import { NODE_ENV } from '../config';
 
 const formatString = 'dd.MM HH:mm';

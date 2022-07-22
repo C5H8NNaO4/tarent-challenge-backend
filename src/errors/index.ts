@@ -1,5 +1,3 @@
-import { NODE_ENV } from '../config';
-
 export const InvalidRouteError = new Error('Invalid route');
 export const Unauthorized = new Error('Unauthorized');
 export const BookedOut = new Error('No slots available.');

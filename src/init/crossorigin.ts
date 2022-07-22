@@ -1,25 +1,24 @@
-import cors from 'cors';
-import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+import cors from 'cors';
 import csrf from 'csurf';
 
 import { CLIENT_ORIGIN, NODE_ENV } from '../config';
 
+export const csrfProtection = csrf({
+    cookie: {
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: 3600,
+    },
+});
+
+const corsOptions = {
+    origin: [CLIENT_ORIGIN],
+    credentials: true,
+    optionsSuccessStatus: 200,
+};
+
 export const initCORS = (app) => {
-    const csrfProtection = csrf({
-        cookie: {
-            secure: process.env.NODE_ENV === 'production',
-            maxAge: 3600,
-        },
-    });
-
-    const corsOptions = {
-        origin: [CLIENT_ORIGIN],
-        credentials: true,
-        // some legacy browsers (IE11, various SmartTVs) choke on 204
-        optionsSuccessStatus: 200,
-    };
-
     app.use(cors(corsOptions));
     app.use(bodyParser());
     app.use(cookieParser());
@@ -37,8 +36,4 @@ export const initCORS = (app) => {
             next();
         });
     }
-
-    return {
-        csrfProtection,
-    };
 };

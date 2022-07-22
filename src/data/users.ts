@@ -1,5 +1,6 @@
-import { Permissions } from './permissions';
 import bcrypt from 'bcrypt';
+
+import { Permissions } from './permissions';
 
 export const anon = {
     id: -1,
@@ -45,7 +46,7 @@ export const findUserByName = (name) => {
 
 export const verifyPassword = (password, hash) => {
     return new Promise((resolve, reject) => {
-        bcrypt.compare(password, hash, function (err, result) {
+        bcrypt.compare(password, hash, (err, result) => {
             if (!err && result) {
                 resolve(true);
             } else {

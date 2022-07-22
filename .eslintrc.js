@@ -11,14 +11,28 @@ module.exports = {
         es2021: true,
         'jest/globals': true,
     },
-    extends: ['airbnb', 'prettier', 'plugin:prettier/recommended'],
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:prettier/recommended',
+    ],
     parser: '@typescript-eslint/parser',
     parserOptions: {
         ecmaVersion: 'latest',
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint', 'prettier', 'jest'],
+    plugins: ['@typescript-eslint', 'prettier', 'jest', 'import'],
     rules: {
+        'sort-imports': [
+            'error',
+            {
+                ignoreCase: false,
+                ignoreDeclarationSort: true,
+                ignoreMemberSort: false,
+                memberSyntaxSortOrder: ['none', 'all', 'multiple', 'single'],
+                allowSeparatedGroups: true,
+            },
+        ],
         'linebreak-style': 'off',
         'import/extensions': [
             'error',
@@ -27,22 +41,29 @@ module.exports = {
                 json: 'always',
             },
         ],
-        'react/function-component-definition': [
-            'error',
-            {
-                namedComponents: 'arrow-function',
-                unnamedComponents: 'arrow-function',
-            },
-        ],
-        'react/jsx-filename-extension': 'off',
-        'react/jsx-props-no-spreading': 'off',
-        'react/jsx-indent': 'off',
-        'react/jsx-indent-props': [0, 'first'],
-        'react/require-default-props': 'off',
-        'react/jsx-wrap-multilines': 'off',
         'no-use-before-define': 'off',
         'import/prefer-default-export': 'off',
-        'react/react-in-jsx-scope': 'off',
+        'import/order': [
+            'error',
+            {
+                groups: [
+                    'builtin',
+                    'external',
+                    'internal',
+                    'sibling',
+                    'parent',
+                    'index',
+                    'unknown',
+                ],
+                'newlines-between': 'always',
+                alphabetize: {
+                    /* sort in ascending order. Options: ["ignore", "asc", "desc"] */
+                    order: 'asc',
+                    /* ignore case. Options: [true, false] */
+                    caseInsensitive: true,
+                },
+            },
+        ],
         indent: 'off',
     },
 };

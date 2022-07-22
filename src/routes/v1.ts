@@ -7,14 +7,14 @@ import {
     bookTimeSlotForTraining,
     cancelTimeSlotForTraining,
     deleteTimeSlotFromTraining,
+    deleteTraining,
+    getAuthenticatedUser,
     getBookingsByTrainingId,
     logout,
     modifyTimeSlotOfTraining,
-    upsertTraining,
     sendBookingData,
-    sendSessionUser,
     sendTrainingData,
-    deleteTraining,
+    upsertTraining,
 } from '../lib/api';
 import { hasPermission } from '../lib/middleware';
 
@@ -23,8 +23,8 @@ const router = Router();
 router.get('/trainings', sendTrainingData);
 router.get('/bookings', sendBookingData);
 
-router.get('/login', passport.authenticate('session'), sendSessionUser);
-router.post('/login', passport.authenticate('local'), sendSessionUser);
+router.get('/login', passport.authenticate('session'), getAuthenticatedUser);
+router.post('/login', passport.authenticate('local'), getAuthenticatedUser);
 router.post('/logout', logout);
 
 router.post(

@@ -1,6 +1,6 @@
+import session from 'express-session';
 import passport from 'passport';
 import LocalStrategy from 'passport-local';
-import session from 'express-session';
 
 import {
     anon,
@@ -12,7 +12,7 @@ import { SESSION_SECRET } from '../lib/secrets';
 
 export const initPassPort = (app) => {
     passport.use(
-        new LocalStrategy(async function (username, password, done) {
+        new LocalStrategy(async (username, password, done) => {
             const user = findUserByName(username);
 
             if (!user) {
@@ -44,11 +44,11 @@ export const initPassPort = (app) => {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.serializeUser(function (user, done) {
+    passport.serializeUser((user, done) => {
         done(null, user.id);
     });
 
-    passport.deserializeUser(function (id, done) {
+    passport.deserializeUser((id, done) => {
         try {
             const user = findUserById(id);
             done(null, user);
